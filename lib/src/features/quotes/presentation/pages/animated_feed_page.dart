@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:quote_app/src/utils/page_controller_current_page.dart';
 
-class AnimatedQuotePage extends StatefulWidget {
+class AnimatedFeedPage extends StatefulWidget {
   final PageController controller;
   final int index;
   final Color? backgroundColor;
   final Widget child;
 
-  const AnimatedQuotePage({
+  const AnimatedFeedPage({
     required this.controller,
     required this.index,
     required this.child,
@@ -16,10 +16,10 @@ class AnimatedQuotePage extends StatefulWidget {
   });
 
   @override
-  State<AnimatedQuotePage> createState() => _AnimatedQuotePageState();
+  State<AnimatedFeedPage> createState() => _AnimatedQuotePageState();
 }
 
-class _AnimatedQuotePageState extends State<AnimatedQuotePage> {
+class _AnimatedQuotePageState extends State<AnimatedFeedPage> {
   @override
   void initState() {
     super.initState();

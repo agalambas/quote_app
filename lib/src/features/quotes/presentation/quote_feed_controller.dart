@@ -4,50 +4,56 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quote_app/src/features/quotes/data/quotes_repository.dart';
 import 'package:quote_app/src/features/quotes/domain/quote.dart';
 
-final quoteScreenControllerProvider =
-    ChangeNotifierProvider<QuoteScreenController>((ref) {
+final quoteFeedControllerProvider =
+    StateNotifierProvider<QuoteFeedController, PageState>((ref) {
   final repository = ref.watch(quotesRepositoryProvider);
-  return QuoteScreenController(repository);
+  return QuoteFeedController(repository: repository);
 });
 
-class QuoteScreenController extends ChangeNotifier {
+enum PageState {
+  data,
+  loading,
+  error,
+  errorLoading;
+
+  bool get hasError => this == error || this == errorLoading;
+  bool get isLoading => this == loading || this == errorLoading;
+}
+
+//! switch form fetching 10 at a time to fetch i+10 at every i build
+//! remove PageState and always present an extra loading page (or error if so)
+class QuoteFeedController extends StateNotifier<PageState> {
   final QuotesRepository repository;
   final controller = PageController();
-  final int _pageSize = 10;
+  final int pageSize = 10;
 
-  QuoteScreenController(this.repository) {
+  QuoteFeedController({required this.repository}) : super(PageState.loading) {
     fetchMore();
   }
 
-  bool isLoading = false;
-  bool hasError = false;
   var quotes = <Quote>[];
 
   int get itemCount => quotes.length + (showExtraPage ? 1 : 0);
-  bool get showExtraPage => isLoading || hasError;
+  bool get showExtraPage => state != PageState.data;
 
   bool shouldFetchMore(int index) =>
-      !isLoading && !hasError && index >= quotes.length - _pageSize / 2;
+      state == PageState.data && index >= quotes.length - pageSize / 2;
 
   Future<void> fetchMore() async {
-    isLoading = true;
-    notifyListeners();
+    state = state.hasError ? PageState.errorLoading : PageState.loading;
     try {
       final newQuotes = [];
-      for (var i = 0; i < _pageSize; i++) {
+      for (var i = 0; i < pageSize; i++) {
         final quote = await repository.fetchRandomQuote(
           lastQuote: newQuotes.lastOrNull ?? quotes.lastOrNull,
         );
         newQuotes.add(quote);
       }
       quotes.addAll([...newQuotes]);
-      isLoading = false;
-      hasError = false;
+      state = PageState.data;
     } catch (_) {
-      isLoading = false;
-      hasError = true;
+      state = PageState.error;
     }
-    notifyListeners();
   }
 
   @override

@@ -1,36 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:quote_app/src/features/quotes/domain/quote.dart';
 import 'package:quote_app/src/features/quotes/domain/quote_style.dart';
-import 'package:quote_app/src/features/quotes/presentation/pages/animated_quote_page.dart';
+import 'package:quote_app/src/features/quotes/domain/styled_quote.dart';
+import 'package:quote_app/src/features/quotes/presentation/pages/animated_feed_page.dart';
 import 'package:quote_app/src/features/quotes/presentation/quote_card.dart';
 
-class LoadingQuotePage extends StatelessWidget {
+class LoadingFeedPage extends StatelessWidget {
   final PageController controller;
   final int index;
 
-  const LoadingQuotePage({
+  LoadingFeedPage({
     required this.controller,
     required this.index,
     super.key,
   });
 
-  final quote = const Quote(
+  late final quote = StyledQuote(
     id: 0,
     quote: 'It is not the load that breaks you down,'
         ' it\'s the way you carry it',
     author: 'Lena Horne',
+    styleId: index,
   );
 
   @override
   Widget build(BuildContext context) {
-    final style = QuoteStyle.fromPosition(index);
-    return AnimatedQuotePage(
+    final style = QuoteStyle.fromIndex(index);
+    return AnimatedFeedPage(
       controller: controller,
       index: index,
       backgroundColor: style.backgroundColor,
       child: Column(
         children: [
-          Expanded(child: QuoteCard(quote, style: style)),
+          Expanded(child: QuoteCard(quote)),
           const SizedBox(height: 48),
           CircularProgressIndicator(color: style.foregroundColor),
         ],

@@ -4,13 +4,11 @@ class QuoteButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Widget child;
   final OutlinedBorder? shape;
-  final bool loading;
 
   const QuoteButton({
     super.key,
     this.onPressed,
     this.shape,
-    this.loading = false,
     required this.child,
   });
 
@@ -29,14 +27,8 @@ class QuoteButton extends StatelessWidget {
           side: const BorderSide(color: Colors.white54),
           foregroundColor: Colors.white,
         ),
-        onPressed: loading ? null : onPressed,
-        child: loading
-            ? const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              )
-            : child,
+        onPressed: onPressed,
+        child: child,
       ),
     );
   }

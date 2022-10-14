@@ -8,7 +8,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final container = ProviderContainer();
   await container.read(sharedPreferencesFutureProvider.future);
-  //TODO add font licenses
+  //! add font licenses
   runApp(UncontrolledProviderScope(
     container: container,
     child: const MyApp(),

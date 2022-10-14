@@ -4,19 +4,19 @@ import 'package:quote_app/src/common_widgets/show_custom_sheet.dart';
 import 'package:quote_app/src/features/saved_quotes/presentation/saved_quotes_screen.dart';
 import 'package:quote_app/src/utils/page_controller_current_page.dart';
 
-import 'pages/error_quote_page.dart';
-import 'pages/loading_quote_page.dart';
-import 'pages/quote_page.dart';
-import 'quote_screen_controller.dart';
+import 'pages/error_feed_page.dart';
+import 'pages/loading_feed_page.dart';
+import 'pages/quote_feed_page.dart';
+import 'quote_feed_controller.dart';
 
-class QuoteScreen extends ConsumerStatefulWidget {
-  const QuoteScreen({super.key});
+class QuoteFeedScreen extends ConsumerStatefulWidget {
+  const QuoteFeedScreen({super.key});
 
   @override
-  ConsumerState<QuoteScreen> createState() => _RandomQuoteScreenState();
+  ConsumerState<QuoteFeedScreen> createState() => _RandomQuoteScreenState();
 }
 
-class _RandomQuoteScreenState extends ConsumerState<QuoteScreen> {
+class _RandomQuoteScreenState extends ConsumerState<QuoteFeedScreen> {
   final pageController = PageController();
   var swiping = false;
 
@@ -24,7 +24,7 @@ class _RandomQuoteScreenState extends ConsumerState<QuoteScreen> {
   void initState() {
     super.initState();
     pageController.addListener(() {
-      final controller = ref.read(quoteScreenControllerProvider);
+      final controller = ref.read(quoteFeedControllerProvider.notifier);
       final page = pageController.currentPage;
       if (controller.shouldFetchMore(page)) controller.fetchMore();
     });
@@ -38,17 +38,16 @@ class _RandomQuoteScreenState extends ConsumerState<QuoteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(quoteScreenControllerProvider);
+    final state = ref.watch(quoteFeedControllerProvider);
+    final controller = ref.watch(quoteFeedControllerProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: IconButton(
-          onPressed: () {
-            showCustomSheet(
-              context: context,
-              child: const SavedQuotesScreen(),
-            );
-          },
+          onPressed: () => showCustomSheet(
+            context: context,
+            child: const SavedQuotesScreen(),
+          ),
           icon: const Icon(
             Icons.collections_bookmark_rounded,
             color: Colors.white,
@@ -63,17 +62,21 @@ class _RandomQuoteScreenState extends ConsumerState<QuoteScreen> {
         itemBuilder: (context, index) {
           final quotes = controller.quotes;
           if (index == controller.itemCount - 1) {
-            return controller.hasError
-                ? ErrorQuotePage(
+            return state.hasError
+                ? ErrorFeedPage(
                     controller: pageController,
                     index: index,
-                    loading: controller.isLoading,
+                    loading: state.isLoading,
                     onRefresh: controller.fetchMore,
                   )
-                : LoadingQuotePage(controller: pageController, index: index);
+                : LoadingFeedPage(controller: pageController, index: index);
           }
           final quote = quotes[index];
-          return QuotePage(quote, controller: pageController, index: index);
+          return QuoteFeedPage(
+            quote,
+            controller: pageController,
+            index: index,
+          );
         },
       ),
     );

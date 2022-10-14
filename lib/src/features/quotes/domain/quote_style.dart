@@ -2,20 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuoteStyle {
+  final int id;
   final Color backgroundColor;
   final Color foregroundColor;
   final String fontFamily;
 
-  QuoteStyle({
+  QuoteStyle._({
+    required this.id,
     required this.backgroundColor,
     required this.foregroundColor,
     required this.fontFamily,
   });
 
-  factory QuoteStyle.fromPosition(int position) {
-    final colors = _colorPairs[position % _colorPairs.length];
-    final font = _fontFamilies[position % _fontFamilies.length];
-    return QuoteStyle(
+  factory QuoteStyle.fromIndex(int id) {
+    final colors = _colorPairs[id % _colorPairs.length];
+    final font = _fontFamilies[id % _fontFamilies.length];
+    return QuoteStyle._(
+      id: id,
       backgroundColor: colors.first,
       foregroundColor: colors.last,
       fontFamily: font,

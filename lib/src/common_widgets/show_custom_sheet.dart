@@ -12,36 +12,29 @@ void showCustomSheet({
     builder: (context) => SizedBox(
       height: mediaQuery.size.height - mediaQuery.padding.top - kToolbarHeight,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            height: 48,
-            alignment: Alignment.center,
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(28),
               ),
             ),
-            child: Container(
-              height: 4,
-              width: 20,
-              decoration: BoxDecoration(
-                color: Colors.black45,
-                borderRadius: BorderRadius.circular(2),
-              ),
+            child: const Icon(
+              Icons.horizontal_rule_rounded,
+              color: Colors.black87,
+              size: 32,
             ),
           ),
           Expanded(
-            child: Container(color: Colors.white, child: child),
+            child: Container(
+              color: Colors.white,
+              child: child,
+            ),
           ),
         ],
       ),
-      // child: BottomSheet(
-      //   onClosing: () {},
-      //   builder: (context) => Container(
-      //       // margin: const EdgeInsets.only(top: 100),
-      //       ),
-      // ),
     ),
   );
 }

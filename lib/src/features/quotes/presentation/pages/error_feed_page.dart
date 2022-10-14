@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:quote_app/src/features/quotes/domain/quote.dart';
 import 'package:quote_app/src/features/quotes/domain/quote_style.dart';
-import 'package:quote_app/src/features/quotes/presentation/pages/animated_quote_page.dart';
+import 'package:quote_app/src/features/quotes/domain/styled_quote.dart';
+import 'package:quote_app/src/features/quotes/presentation/pages/animated_feed_page.dart';
 import 'package:quote_app/src/features/quotes/presentation/quote_button.dart';
 import 'package:quote_app/src/features/quotes/presentation/quote_card.dart';
 
-class ErrorQuotePage extends StatelessWidget {
+class ErrorFeedPage extends StatelessWidget {
   final PageController controller;
   final int index;
   final bool loading;
   final VoidCallback? onRefresh;
 
-  const ErrorQuotePage({
+  ErrorFeedPage({
     required this.controller,
     required this.index,
     this.loading = false,
@@ -19,22 +19,23 @@ class ErrorQuotePage extends StatelessWidget {
     super.key,
   });
 
-  final quote = const Quote(
+  late final quote = StyledQuote(
     id: 0,
     quote: 'When things go wrong don\'t go with them',
     author: 'Elvis Presley',
+    styleId: index,
   );
 
   @override
   Widget build(BuildContext context) {
-    final style = QuoteStyle.fromPosition(index);
-    return AnimatedQuotePage(
+    final style = QuoteStyle.fromIndex(index);
+    return AnimatedFeedPage(
       controller: controller,
       index: index,
       backgroundColor: style.backgroundColor,
       child: Column(
         children: [
-          Expanded(child: QuoteCard(quote, style: style)),
+          Expanded(child: QuoteCard(quote)),
           const SizedBox(height: 48),
           loading
               ? CircularProgressIndicator(color: style.foregroundColor)

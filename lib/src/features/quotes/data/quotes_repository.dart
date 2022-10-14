@@ -30,7 +30,7 @@ class QuotesRepository {
     }
   }
 
-  Future<Quote> fetchQuote({int? quoteId}) async {
+  Future<Quote> fetchQuote({required int quoteId}) async {
     final response = await client.get(Uri.http(
       'quotes.stormconsultancy.co.uk',
       '/quotes/$quoteId.json',

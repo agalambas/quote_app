@@ -45,7 +45,6 @@ dependencies:
   flutter_animate: ^1.0.0
   auto_size_text: ^3.0.0
   shared_preferences: ^2.0.15
-  mocktail: ^0.3.0
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +56,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  mocktail: ^0.3.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
