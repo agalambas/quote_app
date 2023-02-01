@@ -1,16 +1,5 @@
-# quote_app
+# Quote Slider
 
-A new Flutter project.
+A Kabisa [coding assignment](https://github.com/ggalambas/quotes/files/10548669/Kabisa.coding.assignment.-.Flutter.pdf)
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![UI](https://user-images.githubusercontent.com/23039652/216017300-59376e0a-f989-4de0-a821-4b3557bf4120.png)
